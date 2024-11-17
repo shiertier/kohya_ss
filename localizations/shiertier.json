@@ -1,7 +1,7 @@
 
  {
   "Train a custom model using kohya train network LoRA python code...": "使用kohya lora 训练自定义模型 (shiertier汉化)",
-    "Configuration": "配置(选择`/root/kohya_ss/presets/flux_lora_example.json`并点击右侧第三个按钮)",
+    "Configuration": "配置",
     "Load/Save Config file": "加载/保存配置文件",
      "Accelerate launch": "accelerate启动配置",
      "Whether or not to use mixed precision training.": "是否使用混合精度训练",
