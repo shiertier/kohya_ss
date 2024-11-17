@@ -33,8 +33,15 @@ def UI(**kwargs):
         with open(os.path.join("./README.md"), "r", encoding="utf8") as file:
             README = file.read()
 
+    from gradio.themes.base import Base
+    class Seafoam(Base):
+        pass
+    seafoam = Seafoam()
+   
     interface = gr.Blocks(
-        css=css, title=f"Kohya_ss GUI {release}", theme=gr.themes.Default()
+        #css=css, title=f"Kohya_ss GUI {release}", theme=gr.themes.Default()
+        #css=css, title=f"Kohya_ss GUI {release}", theme="lone17/kotaemon"
+        css=css, title=f"Kohya_ss GUI {release}", theme=seafoam
     )
 
     config = KohyaSSGUIConfig(config_file_path=kwargs.get("config"))
@@ -45,7 +52,7 @@ def UI(**kwargs):
     use_shell_flag = True
     # if os.name == "posix":
     #     use_shell_flag = True
-        
+
     use_shell_flag = config.get("settings.use_shell", use_shell_flag)
         
     if kwargs.get("do_not_use_shell", False):
@@ -55,6 +62,8 @@ def UI(**kwargs):
         log.info("Using shell=True when running external commands...")
 
     with interface:
+        with gr.Tab("LoRA"):
+            lora_tab(headless=headless, config=config, use_shell_flag=use_shell_flag)
         with gr.Tab("Dreambooth"):
             (
                 train_data_dir_input,
@@ -64,8 +73,6 @@ def UI(**kwargs):
             ) = dreambooth_tab(
                 headless=headless, config=config, use_shell_flag=use_shell_flag
             )
-        with gr.Tab("LoRA"):
-            lora_tab(headless=headless, config=config, use_shell_flag=use_shell_flag)
         with gr.Tab("Textual Inversion"):
             ti_tab(headless=headless, config=config, use_shell_flag=use_shell_flag)
         with gr.Tab("Finetuning"):
